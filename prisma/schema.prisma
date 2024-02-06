@@ -11,10 +11,19 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  name String
-  email String @unique
-  password String
+  id        String @default(uuid()) @id
+  name      String
+  email     String @unique()
+  password  String
+  tasks     Task[]
+}
 
-  @@map("users")
+model Task {
+  id        Int @default(autoincrement()) @id
+  title     String
+  status    String
+  author    User @relation(fields: [authorId], references: [id])
+  authorId  String
+
+  @@map("tasks")
 }
